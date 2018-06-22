@@ -14,29 +14,31 @@
 			<span class="menu-text"> Registro Usuarios</span>
 		</a>
 		<b class="arrow"></b>
-
+	</li>
 	@endif
 
-	<ul class="active nav">
-		<a href="">
-			<i class="menu-icon fa fa-book"></i>
-			<span class="menu-text"> Sellos</span>
-		</a>
-		<li class="active">
-			<a href="{{ url('/entrada') }}">
-			<i class="menu-icon  fa fa-building"></i>
-			<span class="menu-text"> Entradas</span>
+	<li class="active open">
+		<a href="#" class="dropdown-toggle">
+			<i class="menu-icon fa fa-pencil-square-o"></i>
+			<span class="menu-text"> Sellos </span>
+			<b class="arrow fa fa-angle-down"></b>
 		</a>
 		<b class="arrow"></b>
-		</li>
-
-		<li class="active">
-			<a href="{{ url('/salida') }}">
-			<i class="menu-icon  fa fa-building"></i>
-			<span class="menu-text"> Salidas</span>
-		</a>
-		<b class="arrow"></b>
-		</li>
-	</ul>
-	
+		<ul class="submenu">
+			<li class="active">
+				<a href="{{ url('/entrada') }}">
+					<i class="menu-icon fa fa-caret-right"></i>
+					Entradas
+				</a>
+				<b class="arrow"></b>
+			</li>
+			<li class="active">
+				<a href="{{ url('/salida') }}">
+					<i class="menu-icon fa fa-caret-right"></i>
+					Salidas
+				</a>
+				<b class="arrow"></b>
+			</li>
+		</ul>
+	</li>
 </ul>

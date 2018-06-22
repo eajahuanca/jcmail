@@ -22,11 +22,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/home', 'HomeController@index')->name('home');
 	
     Route::resource('/entrada', 'SelloEntradaController');
+    Route::get('/listadoentrada', 'SelloEntradaController@listado');
     Route::resource('/salida', 'SelloSalidaController');
-	
-	/*Route::resource('/permiso', 'PermisoController');
-	Route::get('/reporte/{idpermiso}', 'PermisoController@reporte');
-    Route::get('superior', 'PermisoController@superior');
-    Route::get('recursos', 'PermisoController@recursos');
-    Route::get('direccion', 'PermisoController@direccion');*/
+    Route::get('/listadosalida', 'SelloSalidaController@listado');
 });

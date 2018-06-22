@@ -9,48 +9,50 @@
 @section('detalle','nuevo registro de sello de entrada')
 
 @section('cuerpo')
-    
-<div class="row">
-    <div class="col-xs-12 col-sm-4">
-        <div>
-            {{ Form::label('cbotematica', 'Tematica') }}
-            {{ Form::select('cbotematica', ['Pajarito' => 'Pajarito', 'Navidad' => 'PapaNoel', 'Evo' =>'Evo Morales'],null, ['class' => 'chosen-select form-control']) }}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="{{ $errors->has('c_actual')?' has-error':'' }}">
-            {{ Form::label('c_actual', 'Cantidad Actual (Stock)') }}
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="ace-icon fa fa-image"></i>
-                </span>
-                {{ Form::text('c_actual',500, ['class' => 'form-control']) }}
-            </div>
-            @if($errors->has('c_actual'))
-                <span style="color:red;">
-                    <strong>{{ $errors->first('c_actual') }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="{{ $errors->has('c_nueva')?' has-error':'' }}">
-            {{ Form::label('c_nueva', 'Nuevo Ingreso') }}
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="ace-icon fa fa-money"></i>
-                </span>
-                {{ Form::text('c_nueva',null, ['class' => 'form-control', 'placeholder' => 'Ingrese la nueva cantidad de sellos']) }}
-            </div>
-            @if($errors->has('c_nueva'))
-                <span style="color:red;">
-                    <strong>{{ $errors->first('c_nueva') }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
 
-    
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            {!! Form::open(['route' => 'entrada.store', 'method' => 'post']) !!}
+            <div class="clearfix">
+                <div class="pull-left">
+                    <button class="btn btn-primary btn-round" type="submit">
+                        <i class="ace-icon fa fa-save align-center"></i>
+                        <b>Guardar</b>
+                    </button>
+                    <a class="btn btn-danger btn-round" href="{{ route('entrada.index') }}">
+                        <i class="ace-icon fa fa-exchange align-center"></i>
+                        <b>Cancelar</b>
+                    </a>
+                </div>
+            </div>
+            <br>
+            <div class="col-xs-12 col-sm-12">
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4 class="widget-title">Datos a registrar (Usuarios)</h4>
+                        <span class="widget-toolbar">
+                            <a href="#" data-action="settings">
+                                <i class="ace-icon fa fa-cog"></i>
+                            </a>
+                            <a href="#" data-action="reload">
+                                <i class="ace-icon fa fa-refresh"></i>
+                            </a>
+                            <a href="#" data-action="collapse">
+                                <i class="ace-icon fa fa-chevron-up"></i>
+                            </a>
+                        </span>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main">
+                        @include('sistema.selloentrada.form')
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            {!! Form::close() !!}
+        </div>
+    </div>
 @endsection
 
 @section('scripts')

@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Regional;
+use App\Unidad;
+use App\Salida;
+use App\Tematica;
+use App\Correlativo;
+use App\User;
 
 class SelloSalidaController extends Controller
 {
@@ -17,14 +23,44 @@ class SelloSalidaController extends Controller
     }
 
     /**
+     * Function detail jqxGrid Json Salidas
+     */
+    public function listado(){
+        $result = DB::table('salidas')
+                    ->join('tematicas', 'salidas.idtematica', '=', 'tematicas.id')
+                    ->join('unidades', 'salidas.idunidad', '=', 'unidades.id')
+                    ->join('regionales', 'salidas.idregional', '=', 'regionales.id')
+                    ->where([
+                        ['tematicas.estado','=',true],
+                        ['unidades.estado','=',true],
+                        ['regionales.estado','=',true],
+                    ])
+                    ->select(DB::raw("salidas.id,
+                            DATE_FORMAT(salidas.fecha_salida, '%d/%m/%Y') AS fecha_salida
+                            salidas.cite_manual,
+                            unidades.unidad,
+                            regionales.regional,
+                            tematicas.tematica,
+                            tematicas.costo,
+                            salidas.cantidad_actual,
+                            salidas.cantidad_salida,
+                            salidas.total,
+                            DATE_FORMAT(salidas.created_at, '%d/%m/%Y %h:%i %p') AS created_at"))
+                    ->get()
+                    ->toJson();
+        return $result;
+    }
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $datos = 'x';
-        return view('sistema.sellosalida.create', compact(['datos'=>$datos]));
+        $unidad = Unidad::where("estado","=",true)->pluck('unidad', 'id');
+        $regional = Regional::where("estado","=",true)->pluck('regional', 'id');
+        $tematica = Tematica::where("estado","=",true)->pluck('tematica', 'id');
+        return view('sistema.sellosalida.create', compact('unidad','regional', 'tematica'));
     }
 
     /**

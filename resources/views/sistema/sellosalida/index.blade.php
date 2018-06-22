@@ -1,7 +1,14 @@
 @extends('layouts.init')
 
 @section('styles')
-	
+    <link rel="stylesheet" href="{{ asset('/assets/jqwidgets/styles/jqx.base.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('/assets/jqwidgets/styles/jqx.mopsv.min.css') }}" type="text/css" />
+    <style>
+        .gridEntradas{
+            font-family:arial !important;
+            font-size:14px !important;
+        }
+    </style>
 @endsection
 
 @section('actual','Salida de Sellos')
@@ -9,117 +16,96 @@
 @section('detalle','listado de sellos registrados')
 
 @section('cuerpo')
-    
-
-<div class="row">
-    <div class="col-xs-12 col-sm-4">
-        <div class="{{ $errors->has('f_salida')?' has-error':'' }}">
-            {{ Form::label('f_salida', 'Fecha') }}
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="ace-icon fa fa-calendar"></i>
-                </span>
-                {{ Form::text('f_salida',null, ['class' => 'form-control', 'placeholder' => 'Fecha']) }}
+    <div class="form-group">
+		<div class="row">
+			<div class="col-xs-12 pull-left">
+				<a href="{{ route('salida.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Nueva Salida de Sellos</a>
+				<a class="btn btn-danger"><i class="fa fa-file-pdf-o"></i> Reporte</a>
+			</div>
+		</div>
+		<div class="row">
+            <div class="col-xs-12">
+                <div class="jqxgrid-container" style="margin-top: 20px">
+                    <div id="gridSalidas"></div>
+                </div>
             </div>
-            @if($errors->has('f_salida'))
-                <span style="color:red;">
-                    <strong>{{ $errors->first('f_salida') }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="{{ $errors->has('n_cite')?' has-error':'' }}">
-            {{ Form::label('n_cite', 'Cite') }}
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="ace-icon fa fa-newspaper-o"></i>
-                </span>
-                {{ Form::text('n_cite',null, ['class' => 'form-control', 'placeholder' => 'Ingrese el Nro de Cite']) }}
-            </div>
-            @if($errors->has('n_cite'))
-                <span style="color:red;">
-                    <strong>{{ $errors->first('n_cite') }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div>
-            {{ Form::label('u_solicitante', 'Unidad Solicitante') }}
-            {{ Form::select('u_solicitante', ['0' => 'Seleccione una Unidad', '1' => 'Direccion General Ejecutiva', '2' => 'Direccion Administrativa Financiera', '3' => 'Operaciones'],null, ['class' => 'chosen-select form-control']) }}
-        </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-4">
-        <div>
-            {{ Form::label('s_regional', 'Regional') }}
-            {{ Form::select('s_regional', ['0' => 'Seleccione una Regional', '1' => 'Regional La Paz', '2' => 'Regional Cochabamaba', '3' => 'Regional Santa Cruz'],null, ['class' => 'chosen-select form-control']) }}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div>
-            {{ Form::label('s_tematica', 'Tematica') }}
-            {{ Form::select('s_tematica', ['0' => 'Pajarito', '1' => 'PapaNoel', '2' => 'Evo Morales', '3' => 'Naturaleza'],null, ['class' => 'chosen-select form-control']) }}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-        <div class="{{ $errors->has('s_cantidad')?' has-error':'' }}">
-            {{ Form::label('s_cantidad', 'Cantidad') }}
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="ace-icon fa fa-dropbox"></i>
-                </span>
-                {{ Form::text('s_cantidad',null, ['class' => 'form-control', 'placeholder' => 'Ingrese la cantidad']) }}
-            </div>
-            @if($errors->has('s_cantidad'))
-                <span style="color:red;">
-                    <strong>{{ $errors->first('s_cantidad') }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-sm-4">
-      <div class="{{ $errors->has('v_facial')?' has-error':'' }}">
-          {{ Form::label('v_facial', 'Valor Facial') }}
-          <div class="input-group">
-              <span class="input-group-addon">
-                  <i class="ace-icon fa fa-credit-card"></i>
-              </span>
-              {{ Form::text('v_facial',null, ['class' => 'form-control']) }}
-          </div>
-          @if($errors->has('v_facial'))
-              <span style="color:red;">
-                  <strong>{{ $errors->first('v_facial') }}</strong>
-              </span>
-          @endif
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-      <div class="{{ $errors->has('m_total')?' has-error':'' }}">
-          {{ Form::label('m_total', 'Monto Total') }}
-          <div class="input-group">
-              <span class="input-group-addon">
-                  <i class="ace-icon fa fa-money"></i>
-              </span>
-              {{ Form::text('m_total',null, ['class' => 'form-control']) }}
-          </div>
-          @if($errors->has('m_total'))
-              <span style="color:red;">
-                  <strong>{{ $errors->first('m_total') }}</strong>
-              </span>
-          @endif
-      </div>
-    </div>
-    
-</div>
-
-
+		</div>
+	</div>
 @endsection
 
 @section('scripts')
-    
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxcore.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxdata.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxbuttons.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxscrollbar.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxmenu.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxgrid.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxgrid.grouping.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxgrid.selection.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxgrid.filter.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxgrid.sort.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxdropdownlist.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxlistbox.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxcheckbox.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxgrid.pager.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxdatetimeinput.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/jqwidgets/jqxcalendar.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/widgets/base.js') }}"></script>
+
+@endsection
+@section('codigoscript')
+    <script>
+        $(document).ready(function () {
+            var source = {
+                datatype: "json",
+                datafields: [
+                    { name: 'id', type: 'int' },
+                    { name: 'fecha_salida', type: 'date' },
+                    { name: 'cite_manual', type: 'string' },
+                    { name: 'unidad', type: 'string' },
+                    { name: 'regional', type: 'string' },
+                    { name: 'tematica', type: 'string' },
+                    { name: 'cantidad_actual', type: 'int' },
+                    { name: 'cantidad_salida', type: 'int' },
+                    { name: 'costo' },
+                    { name: 'total' },
+                    { name: 'created_at', type: 'date' }
+                ],
+                url: "{{ url('/listadosalida') }}"
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            var options = getBasicGrid(dataAdapter);
+            options.height = 500;
+            options.columns = [
+                { text: 'Fecha Salida', datafield: 'fecha_salida', sortable: true, filterable: false, width: '120px' },
+                { text: 'Cite Manual', datafield: 'cite_manual', sortable: true, filterable: false, width: '120px' },
+                { text: 'Unidad Solicitante', datafield: 'unidad', sortable: true, filtertype: 'checkedlist', width: '160px' },
+                { text: 'Regional', datafield: 'regional', sortable: true, filtertype: 'checkedlist', width: '160px' },
+                { text: 'Temática', datafield: 'tematica', sortable: true, filtertype: 'checkedlist' },
+                { text: 'Costo (Bs.)', datafield: 'costo', width: '80px', filterable: false, cellsalign: 'center' },
+                { text: 'Cantidad Actual', datafield: 'cantidad_actual', width: '120px', filterable: false, cellsalign: 'center' },
+                { text: 'Cantidad Salida', datafield: 'cantidad_salida', width: '120px', filterable: false, cellsalign: 'center' },
+                { text: 'Total', datafield: 'total', width: '150px', filterable: false, cellsalign: 'center' },
+                { text: 'Fecha de Registro', datafield: 'created_at', width: '150px', filterable: false, cellsalign: 'center' },
+                {
+                    text: '',
+                    datafield: 'id',
+                    width: '150px',
+                    sortable: false,
+                    filterable: false,
+                    groupable: false,
+                    cellsrenderer: function(row, col, value, html, other) {
+                        var element = $(html).html("" +
+                            "<button onclick='editarSalida(" + value + ")' class='btn btn-primary' title='Editar Salida'><i class='fa fa-edit'></i></button> " +
+                            "<button onclick='eliminarSalida(" + value + ")' class='btn btn-warning' title='Eliminar Salida'><i class='fa fa-trash'></i></button> " +
+                            "<button onclick='notaSalida(" + value + ")' class='btn btn-danger' title='Nota de Remisión'><i class='fa fa-file-pdf-o'></i></button> ");
+                        return element[0].outerHTML;
+                    }
+                }
+            ];
+
+            $("#gridSalidas").jqxGrid(options);
+        });
+    </script>
 @endsection

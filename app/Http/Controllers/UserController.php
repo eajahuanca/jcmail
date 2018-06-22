@@ -13,7 +13,7 @@ use Carbon\Carbon;
 class UserController extends Controller
 {
     public function __construct(){
-        Carbon::setLocale('es');
+        //Carbon::setLocale('es');
     }
 
     public function index(){

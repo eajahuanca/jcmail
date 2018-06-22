@@ -1,0 +1,15 @@
+.counter {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 11px;
+    color: rgba(15, 147, 235, 0.768);
+}
+
+.warning {
+    color: rgb(204, 150, 14);
+}
+
+.exceeded {
+    color: rgb(243, 20, 20);
+}
