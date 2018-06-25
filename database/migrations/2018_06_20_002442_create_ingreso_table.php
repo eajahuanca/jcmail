@@ -19,6 +19,8 @@ class CreateIngresoTable extends Migration
             $table->decimal('cantidad_actual',18,2);
             $table->decimal('cantidad_total',18,2);
             $table->integer('idtematica')->unsigned();
+            $table->boolean('estado')->default(true);
+            $table->text('observaciones')->nullable();
             $table->integer('userid_registra')->unsigned();
             $table->integer('userid_actualiza')->unsigned();
             $table->timestamps();

@@ -25,6 +25,8 @@ class CreateSalidaTable extends Migration
             $table->decimal('costo', 18,2);
             $table->decimal('total',18,2);
             $table->string('correlativo',100);
+            $table->boolean('estado')->default(true);
+            $table->text('observaciones')->nullable();
             $table->integer('userid_registra')->unsigned();
             $table->integer('userid_actualiza')->unsigned();
             $table->timestamps();

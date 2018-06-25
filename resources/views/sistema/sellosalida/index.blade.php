@@ -2,13 +2,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('/assets/jqwidgets/styles/jqx.base.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('/assets/jqwidgets/styles/jqx.mopsv.min.css') }}" type="text/css" />
-    <style>
-        .gridEntradas{
-            font-family:arial !important;
-            font-size:14px !important;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('/assets/jqwidgets/styles/jqx.energyblue.css') }}" type="text/css" />
 @endsection
 
 @section('actual','Salida de Sellos')
@@ -25,7 +19,7 @@
 		</div>
 		<div class="row">
             <div class="col-xs-12">
-                <div class="jqxgrid-container" style="margin-top: 20px">
+                <div class="jqxgrid-container" style="font-size: 9px; font-family: Verdana;margin-top: 10px;">
                     <div id="gridSalidas"></div>
                 </div>
             </div>
@@ -60,22 +54,22 @@
                 datatype: "json",
                 datafields: [
                     { name: 'id', type: 'int' },
-                    { name: 'fecha_salida', type: 'date' },
+                    { name: 'fecha_salida' },
                     { name: 'cite_manual', type: 'string' },
                     { name: 'unidad', type: 'string' },
                     { name: 'regional', type: 'string' },
                     { name: 'tematica', type: 'string' },
-                    { name: 'cantidad_actual', type: 'int' },
-                    { name: 'cantidad_salida', type: 'int' },
+                    { name: 'cantidad_salida' },
                     { name: 'costo' },
                     { name: 'total' },
-                    { name: 'created_at', type: 'date' }
+                    { name: 'created_at' }
                 ],
                 url: "{{ url('/listadosalida') }}"
             };
 
             var dataAdapter = new $.jqx.dataAdapter(source);
             var options = getBasicGrid(dataAdapter);
+            options.theme = 'energyblue';
             options.height = 500;
             options.columns = [
                 { text: 'Fecha Salida', datafield: 'fecha_salida', sortable: true, filterable: false, width: '120px' },
@@ -84,7 +78,6 @@
                 { text: 'Regional', datafield: 'regional', sortable: true, filtertype: 'checkedlist', width: '160px' },
                 { text: 'Temática', datafield: 'tematica', sortable: true, filtertype: 'checkedlist' },
                 { text: 'Costo (Bs.)', datafield: 'costo', width: '80px', filterable: false, cellsalign: 'center' },
-                { text: 'Cantidad Actual', datafield: 'cantidad_actual', width: '120px', filterable: false, cellsalign: 'center' },
                 { text: 'Cantidad Salida', datafield: 'cantidad_salida', width: '120px', filterable: false, cellsalign: 'center' },
                 { text: 'Total', datafield: 'total', width: '150px', filterable: false, cellsalign: 'center' },
                 { text: 'Fecha de Registro', datafield: 'created_at', width: '150px', filterable: false, cellsalign: 'center' },
@@ -97,11 +90,11 @@
                     groupable: false,
                     cellsrenderer: function(row, col, value, html, other) {
                         var element = $(html).html("" +
-                            "<button onclick='editarSalida(" + value + ")' class='btn btn-primary' title='Editar Salida'><i class='fa fa-edit'></i></button> " +
-                            "<button onclick='eliminarSalida(" + value + ")' class='btn btn-warning' title='Eliminar Salida'><i class='fa fa-trash'></i></button> " +
                             "<button onclick='notaSalida(" + value + ")' class='btn btn-danger' title='Nota de Remisión'><i class='fa fa-file-pdf-o'></i></button> ");
                         return element[0].outerHTML;
                     }
+                    //"<button onclick='editarSalida(" + value + ")' class='btn btn-primary' title='Editar Salida'><i class='fa fa-edit'></i></button> " +
+                    //"<button onclick='eliminarSalida(" + value + ")' class='btn btn-warning' title='Eliminar Salida'><i class='fa fa-trash'></i></button> " +
                 }
             ];
 

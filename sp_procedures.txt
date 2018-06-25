@@ -1,0 +1,33 @@
+CREATE PROCEDURE `SP_ACTUALIZAR_INGRESOS`(IN ingresoID int, IN tematicaID int, IN cantidad_nueva decimal(18,2))
+BEGIN
+	UPDATE tematicas
+    SET saldo_actual = saldo_actual + cantidad_nueva
+    WHERE tematicas.id = tematicaID;
+    
+	IF (SELECT count(*) FROM ingresos WHERE idtematica = tematicaID AND estado = true) > 1 THEN
+		UPDATE ingresos
+		SET ingresos.estado = FALSE
+		WHERE ingresos.idtematica = tematicaID AND
+			  ingresos.id <> ingresoID;
+    END IF;
+END
+
+
+
+CREATE PROCEDURE `SP_ACTUALIZAR_SALIDAS_CORRELATIVO`(IN salidaID int, IN tematicaID int, IN cantidad_salida decimal(18,2), IN correlativoID int)
+BEGIN
+	UPDATE correlativos
+    SET valor = valor + 1
+    WHERE correlativos.id = correlativoID AND correlativos.estado=TRUE;
+    
+    UPDATE tematicas
+    SET tematicas.saldo_actual = tematicas.saldo_actual - cantidad_salida
+    WHERE tematicas.id = tematicaID;
+    
+    IF (SELECT COUNT(*) FROM salidas WHERE idtematica=tematicaID AND estado=TRUE)> 1 THEN
+		UPDATE salidas
+        SET salidas.estado=FALSE
+        WHERE salidas.idtematica = tematicaID AND
+			  salidas.id <> salidaID;
+    END IF;
+END

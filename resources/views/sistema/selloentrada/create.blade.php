@@ -55,6 +55,24 @@
     </div>
 @endsection
 
-@section('scripts')
-    
+@section('codigoscript')
+    <script>
+    $(document).ready(function(){
+        $("#idtematica").append("<option selected>Seleccione...</option>");
+        $("#idtematica").change(function(){
+            $.ajax({
+                type: "GET",
+                url: "{{ url('/saldotematica') }}" + "/" + $("#idtematica").val(),
+                dataType: "JSON",
+                success: function(data){
+                    console.log(data);
+                    $("#cantidad_actual").val(data[0].saldo_actual);
+                },
+                error: function(xhr){
+                    console.log('error');
+                }
+            });
+        });
+    });
+    </script>
 @endsection

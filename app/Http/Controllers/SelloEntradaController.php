@@ -3,29 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Tematica;
-use App\Salida;
+use App\Ingreso;
 use DB;
+use Toastr;
 
 class SelloEntradaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('sistema.selloentrada.index');
     }
 
-    /**
-     * Function detail jqxGrid Json Entradas
-     */
     public function listado(){
         $result = DB::table('ingresos')
                     ->join('tematicas', 'ingresos.idtematica', '=', 'tematicas.id')
                     ->where('tematicas.estado','=',true)
+                    ->where('ingresos.estado','=',true)
                     ->select(DB::raw("ingresos.id,
                             ingresos.cantidad_nueva,
                             ingresos.cantidad_actual,
@@ -33,73 +28,56 @@ class SelloEntradaController extends Controller
                             tematicas.tematica,
                             tematicas.costo,
                             DATE_FORMAT(ingresos.created_at, '%d/%m/%Y %h:%i %p') AS created_at"))
+                    ->orderBy('created_at','DESC')
                     ->get()
                     ->toJson();
         return $result;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function saldoTematica($idtematica, Request $request){
+        if($request->ajax()){
+            return DB::table('tematicas')->where('id','=',$idtematica)->get()->toJson();
+        }
+    }
+
     public function create()
     {
         $tematica = Tematica::where("estado","=",true)->pluck('tematica', 'id');
         return view('sistema.selloentrada.create', compact('tematica'));
     }
     
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        try{
+            $ingreso = new Ingreso($request->all());
+            $ingreso->cantidad_total = $ingreso->cantidad_nueva + $ingreso->cantidad_actual;
+            $ingreso->userid_registra = Auth::user()->id;
+            $ingreso->userid_actualiza = Auth::user()->id;
+            if($ingreso->save()){
+                Toastr::success('Se ha registrado un nuevo ingreso con : '.$ingreso->cantidad_nueva.' unidades', 'Ingreso registrado');
+                $ingresoActualizar = DB::select('CALL SP_ACTUALIZAR_INGRESOS(?,?,?)', array($ingreso->id, $ingreso->idtematica, $ingreso->cantidad_nueva));
+            }            
+        }catch(\Exception $ex){
+            Toastr::error('Ocurrio un error: '.$ex->getMessage(),'Error');
+        }
+        return redirect()->route('entrada.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

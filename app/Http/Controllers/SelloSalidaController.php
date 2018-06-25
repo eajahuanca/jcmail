@@ -3,28 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Regional;
 use App\Unidad;
 use App\Salida;
 use App\Tematica;
 use App\Correlativo;
 use App\User;
+use DB;
+use Toastr;
 
 class SelloSalidaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('sistema.sellosalida.index');    
     }
 
-    /**
-     * Function detail jqxGrid Json Salidas
-     */
     public function listado(){
         $result = DB::table('salidas')
                     ->join('tematicas', 'salidas.idtematica', '=', 'tematicas.id')
@@ -34,15 +29,15 @@ class SelloSalidaController extends Controller
                         ['tematicas.estado','=',true],
                         ['unidades.estado','=',true],
                         ['regionales.estado','=',true],
+                        ['salidas.estado','=',true],
                     ])
                     ->select(DB::raw("salidas.id,
-                            DATE_FORMAT(salidas.fecha_salida, '%d/%m/%Y') AS fecha_salida
+                            DATE_FORMAT(salidas.fecha_salida, '%d/%m/%Y') AS fecha_salida,
                             salidas.cite_manual,
                             unidades.unidad,
                             regionales.regional,
                             tematicas.tematica,
-                            tematicas.costo,
-                            salidas.cantidad_actual,
+                            salidas.costo,
                             salidas.cantidad_salida,
                             salidas.total,
                             DATE_FORMAT(salidas.created_at, '%d/%m/%Y %h:%i %p') AS created_at"))
@@ -50,11 +45,7 @@ class SelloSalidaController extends Controller
                     ->toJson();
         return $result;
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         $unidad = Unidad::where("estado","=",true)->pluck('unidad', 'id');
@@ -63,57 +54,55 @@ class SelloSalidaController extends Controller
         return view('sistema.sellosalida.create', compact('unidad','regional', 'tematica'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function citeValor($valor){
+        if($valor<10)
+            return '00000'.$valor;
+        if($valor>9 && $valor <100)
+            return '0000'.$valor;
+        if($valor>99 && $valor<1000)
+            return '000'.$valor;
+        if($valor>999 && $valor<10000)
+            return '00'.$valor;
+        if($valor>9999 && $valor<100000)
+            return '0'.$valor;
+        if($valor>99999)
+            return $valor;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function store(Request $request)
+    {
+        try{
+            $salida = new Salida($request->all());
+            $salida->total = $salida->cantidad_salida * $salida->costo;
+            $salida->userid_registra = Auth::user()->id;
+            $salida->userid_actualiza = Auth::user()->id;
+            $correlativo = DB::table('correlativos')->where([['estado','=',true],['id','=',1]])->get();
+            $salida->correlativo = $correlativo[0]->cite.$this->citeValor($correlativo[0]->valor).'/'.$correlativo[0]->gestion;
+            if($salida->save()){
+                $salidaActualizar = DB::select('CALL SP_ACTUALIZAR_SALIDAS_CORRELATIVO(?,?,?,?)',array($salida->id, $salida->idtematica, $salida->cantidad_salida, 1));
+                Toastr::success('Se ha registrado de manera correcta la salida de '.$salida->cantidad_salida.' unidades','Registro de Salida');
+            }
+        }catch(\Exception $ex){
+            Toastr::error('Ocurrio un error: '.$ex->getMessage(), 'Error');
+        }
+        return redirect()->route('salida.index');
+    }
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

@@ -51,17 +51,17 @@
         </div>
     </div>
     <div class="col-xs-12 col-sm-4">
-        <div class="{{ $errors->has('s_cantidad')?' has-error':'' }}">
-            {{ Form::label('s_cantidad', 'Cantidad') }}
+        <div class="{{ $errors->has('cantidad_actual')?' has-error':'' }}">
+            {{ Form::label('cantidad_actual', 'Cantidad') }}
             <div class="input-group">
                 <span class="input-group-addon">
                     <i class="ace-icon fa fa-dropbox"></i>
                 </span>
-                {{ Form::text('s_cantidad',null, ['class' => 'form-control', 'placeholder' => 'Ingrese la cantidad']) }}
+                {{ Form::text('cantidad_actual',null, ['class' => 'form-control', 'placeholder' => 'Ingrese la cantidad']) }}
             </div>
-            @if($errors->has('s_cantidad'))
+            @if($errors->has('cantidad_actual'))
                 <span style="color:red;">
-                    <strong>{{ $errors->first('s_cantidad') }}</strong>
+                    <strong>{{ $errors->first('cantidad_actual') }}</strong>
                 </span>
             @endif
         </div>
@@ -70,33 +70,49 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-4">
-      <div class="{{ $errors->has('v_facial')?' has-error':'' }}">
-          {{ Form::label('v_facial', 'Valor Facial') }}
+        <div class="{{ $errors->has('cantidad_salida')?' has-error':'' }}">
+            {{ Form::label('cantidad_salida', 'Cantidad') }}
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="ace-icon fa fa-dropbox"></i>
+                </span>
+                {{ Form::text('cantidad_salida',null, ['class' => 'form-control', 'placeholder' => 'Ingrese la cantidad']) }}
+            </div>
+            @if($errors->has('cantidad_salida'))
+                <span style="color:red;">
+                    <strong>{{ $errors->first('cantidad_salida') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <div class="{{ $errors->has('costo')?' has-error':'' }}">
+          {{ Form::label('costo', 'Valor Facial') }}
           <div class="input-group">
               <span class="input-group-addon">
                   <i class="ace-icon fa fa-credit-card"></i>
               </span>
-              {{ Form::text('v_facial',null, ['class' => 'form-control']) }}
+              {{ Form::text('costo',null, ['class' => 'form-control']) }}
           </div>
-          @if($errors->has('v_facial'))
+          @if($errors->has('costo'))
               <span style="color:red;">
-                  <strong>{{ $errors->first('v_facial') }}</strong>
+                  <strong>{{ $errors->first('costo') }}</strong>
               </span>
           @endif
       </div>
     </div>
     <div class="col-xs-12 col-sm-4">
-      <div class="{{ $errors->has('m_total')?' has-error':'' }}">
-          {{ Form::label('m_total', 'Monto Total') }}
+      <div class="{{ $errors->has('total')?' has-error':'' }}">
+          {{ Form::label('total', 'Monto Total') }}
           <div class="input-group">
               <span class="input-group-addon">
                   <i class="ace-icon fa fa-money"></i>
               </span>
-              {{ Form::text('m_total',null, ['class' => 'form-control']) }}
+              {{ Form::text('total',null, ['class' => 'form-control']) }}
           </div>
-          @if($errors->has('m_total'))
+          @if($errors->has('total'))
               <span style="color:red;">
-                  <strong>{{ $errors->first('m_total') }}</strong>
+                  <strong>{{ $errors->first('total') }}</strong>
               </span>
           @endif
       </div>

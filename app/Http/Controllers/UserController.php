@@ -36,7 +36,7 @@ class UserController extends Controller
     {
         if(Auth::user()->us_tipo == "ADMINISTRADOR"){
             try{
-                $user = new USer($request->all());
+                $user = new User($request->all());
                 $user->password = bcrypt($request->input('password'));
                 $user->save();
                 Toastr::success('Los datos del usuario '.$user->us_nombre.', se registraron de manera correcta','Registro');

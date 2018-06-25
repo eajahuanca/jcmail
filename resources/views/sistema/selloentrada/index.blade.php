@@ -2,13 +2,8 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('/assets/jqwidgets/styles/jqx.base.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('/assets/jqwidgets/styles/jqx.mopsv.min.css') }}" type="text/css" />
-    <style>
-        .gridEntradas{
-            font-family:arial !important;
-            font-size:14px !important;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('/assets/jqwidgets/styles/jqx.energyblue.css') }}" type="text/css" />
+    
 @endsection
 
 @section('actual','Sellos de entrada')
@@ -25,7 +20,7 @@
 		</div>
 		<div class="row">
             <div class="col-xs-12">
-                <div class="jqxgrid-container" style="margin-top: 20px">
+                <div id="jqxWidget" style="font-size: 9px; font-family: Verdana;margin-top: 10px;">
                     <div id="gridEntradas"></div>
                 </div>
             </div>
@@ -73,6 +68,7 @@
             var dataAdapter = new $.jqx.dataAdapter(source);
             var options = getBasicGrid(dataAdapter);
             options.height = 500;
+            options.theme = 'energyblue';
             options.columns = [
                 { text: 'Temática', datafield: 'tematica', sortable: true, filterable: true, groupable: false, cellsalign: 'center' },
                 { text: 'Cantidad Actual', datafield: 'cantidad_actual', width: '150px', filterable: false, cellsalign: 'center' },
@@ -89,10 +85,11 @@
                     groupable: false,
                     cellsrenderer: function(row, col, value, html, other) {
                         var element = $(html).html("" +
-                            "<button onclick='editarEntrada(" + value + ")' class='btn btn-primary' title='Editar Entrada'><i class='fa fa-edit'></i></button> " +
-                            "<button onclick='eliminarEntrada(" + value + ")' class='btn btn-warning' title='Eliminar Entrada'><i class='fa fa-trash'></i></button> ");
+                            "<button onclick='notaEntrada(" + value + ")' class='btn btn-danger btn-rounded' title='Nota de Entrada'><i class='fa fa-file-pdf-o'></i></button> ");
                         return element[0].outerHTML;
                     }
+                    //"<button onclick='editarEntrada(" + value + ")' class='btn btn-primary' title='Editar Entrada'><i class='fa fa-edit'></i></button> " +
+                    //"<button onclick='eliminarEntrada(" + value + ")' class='btn btn-warning' title='Eliminar Entrada'><i class='fa fa-trash'></i></button> ");
                 }
             ];
 
