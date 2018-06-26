@@ -98,7 +98,7 @@
             });
         }
 
-        $("#cantidad_salida").on("change", function(){
+        $("#cantidad_salida").on("change keyup", function(){
             var total = 0;
             if (isNaN(parseFloat($("#cantidad_salida").val()))) {
                 total = 0;
