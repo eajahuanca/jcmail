@@ -31,6 +31,8 @@
             @endif
         </div>
     </div>
+</div>
+<div class="row">
     <div class="col-xs-12 col-sm-4">
         <div>
             {{ Form::label('idunidad', 'Unidad Solicitante') }}
@@ -44,6 +46,8 @@
             {{ Form::select('idregional', $regional,null, ['class' => 'chosen-select form-control']) }}
         </div>
     </div>
+</div>
+<div class="row">
     <div class="col-xs-12 col-sm-4">
         <div>
             {{ Form::label('idtematica', 'Tematica') }}
@@ -52,7 +56,7 @@
     </div>
     <div class="col-xs-12 col-sm-4">
         <div class="{{ $errors->has('cantidad_actual')?' has-error':'' }}">
-            {{ Form::label('cantidad_actual', 'Cantidad') }}
+            {{ Form::label('cantidad_actual', 'Cantidad Actual (Stock)') }}
             <div class="input-group">
                 <span class="input-group-addon">
                     <i class="ace-icon fa fa-dropbox"></i>
@@ -70,22 +74,6 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-4">
-        <div class="{{ $errors->has('cantidad_salida')?' has-error':'' }}">
-            {{ Form::label('cantidad_salida', 'Cantidad') }}
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <i class="ace-icon fa fa-dropbox"></i>
-                </span>
-                {{ Form::text('cantidad_salida',null, ['class' => 'form-control', 'placeholder' => 'Ingrese la cantidad']) }}
-            </div>
-            @if($errors->has('cantidad_salida'))
-                <span style="color:red;">
-                    <strong>{{ $errors->first('cantidad_salida') }}</strong>
-                </span>
-            @endif
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
       <div class="{{ $errors->has('costo')?' has-error':'' }}">
           {{ Form::label('costo', 'Valor Facial') }}
           <div class="input-group">
@@ -100,6 +88,22 @@
               </span>
           @endif
       </div>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+        <div class="{{ $errors->has('cantidad_salida')?' has-error':'' }}">
+            {{ Form::label('cantidad_salida', 'Cantidad') }}
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="ace-icon fa fa-dropbox"></i>
+                </span>
+                {{ Form::text('cantidad_salida',null, ['class' => 'form-control sumarSalida', 'placeholder' => 'Ingrese la cantidad']) }}
+            </div>
+            @if($errors->has('cantidad_salida'))
+                <span style="color:red;">
+                    <strong>{{ $errors->first('cantidad_salida') }}</strong>
+                </span>
+            @endif
+        </div>
     </div>
     <div class="col-xs-12 col-sm-4">
       <div class="{{ $errors->has('total')?' has-error':'' }}">

@@ -54,6 +54,10 @@
     </div>
 @endsection
 
+@section('scripts')
+    <script src="{{asset('plugin/assets/js/chosen.jquery.min.js')}}"></script>
+@endsection
+
 @section('codigoscript')
     <script>
     $(document).ready(function(){
@@ -64,13 +68,44 @@
                 url: "{{ url('/saldotematica') }}" + "/" + $("#idtematica").val(),
                 dataType: "JSON",
                 success: function(data){
-                    console.log(data);
                     $("#cantidad_actual").val(data[0].saldo_actual);
+                    $("#costo").val(data[0].costo);
+                    $("#cantidad_salida").val("");
+                    $("#total").val("");
                 },
                 error: function(xhr){
                     console.log('error');
                 }
             });
+        });
+
+        if(!ace.vars['touch']) {
+            $('.chosen-select').chosen({allow_single_deselect:true});
+            $(window)
+            .off('resize.chosen')
+            .on('resize.chosen', function() {
+                $('.chosen-select').each(function() {
+                        var $this = $(this);
+                        $this.next().css({'width': $this.parent().width()});
+                })
+            }).trigger('resize.chosen');
+            $(document).on('settings.ace.chosen', function(e, event_name, event_val) {
+                if(event_name != 'sidebar_collapsed') return;
+                $('.chosen-select').each(function() {
+                        var $this = $(this);
+                        $this.next().css({'width': $this.parent().width()});
+                })
+            });
+        }
+
+        $("#cantidad_salida").on("change", function(){
+            var total = 0;
+            if (isNaN(parseFloat($("#cantidad_salida").val()))) {
+                total = 0;
+            } else {
+                total = parseFloat($("#cantidad_salida").val()).toFixed(2) * parseFloat($("#costo").val()).toFixed(2);
+            }
+            $("#total").val(total);
         });
     });
     </script>

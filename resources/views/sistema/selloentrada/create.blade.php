@@ -55,17 +55,20 @@
     </div>
 @endsection
 
+@section('scripts')
+    <script src="{{asset('plugin/assets/js/chosen.jquery.min.js')}}"></script>
+@endsection
+
 @section('codigoscript')
     <script>
     $(document).ready(function(){
-        $("#idtematica").append("<option selected>Seleccione...</option>");
+        $("#idtematica").append("<option selected>Seleccione ...</option>");
         $("#idtematica").change(function(){
             $.ajax({
                 type: "GET",
                 url: "{{ url('/saldotematica') }}" + "/" + $("#idtematica").val(),
                 dataType: "JSON",
                 success: function(data){
-                    console.log(data);
                     $("#cantidad_actual").val(data[0].saldo_actual);
                 },
                 error: function(xhr){
@@ -73,6 +76,25 @@
                 }
             });
         });
+
+        if(!ace.vars['touch']) {
+            $('.chosen-select').chosen({allow_single_deselect:true});
+            $(window)
+            .off('resize.chosen')
+            .on('resize.chosen', function() {
+                $('.chosen-select').each(function() {
+                        var $this = $(this);
+                        $this.next().css({'width': $this.parent().width()});
+                })
+            }).trigger('resize.chosen');
+            $(document).on('settings.ace.chosen', function(e, event_name, event_val) {
+                if(event_name != 'sidebar_collapsed') return;
+                $('.chosen-select').each(function() {
+                        var $this = $(this);
+                        $this.next().css({'width': $this.parent().width()});
+                })
+            });
+        }
     });
     </script>
 @endsection
