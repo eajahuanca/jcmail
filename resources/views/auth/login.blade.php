@@ -2,7 +2,7 @@
 <html >
 <head>
     <meta charset="UTF-8">
-    <title>.:AGBC-Estampitas:.</title>
+    <title>.:AGBC-RESEF:.</title>
 
     <link rel="icon" type="image/png" href="{{ asset('plugin/login/img/icon.png') }}" />
     <link href="{{ asset('plugin/login/css/css.css') }}" rel='stylesheet' type='text/css'>

@@ -26,4 +26,5 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('/salida', 'SelloSalidaController');
     Route::get('/listadosalida', 'SelloSalidaController@listado');
     Route::get('/saldotematica/{idtematica}', 'SelloEntradaController@saldoTematica');
+    Route::resource('/reversion', 'SellosReversionController');
 });
