@@ -4,7 +4,7 @@
 	
 @endsection
 
-@section('actual','Sellos de entrada')
+@section('actual','Sellos de reversion')
 @section('titulo','Sellos')
 @section('detalle','nuevo registro de sello de entrada')
 
@@ -29,7 +29,7 @@
             <div class="col-xs-12 col-sm-12">
                 <div class="widget-box">
                     <div class="widget-header">
-                        <h4 class="widget-title">Datos a registrar (Sellos de ingreso)</h4>
+                        <h4 class="widget-title">Datos a registrar (Sellos de reversion)</h4>
                         <span class="widget-toolbar">
                             <a href="#" data-action="settings">
                                 <i class="ace-icon fa fa-cog"></i>

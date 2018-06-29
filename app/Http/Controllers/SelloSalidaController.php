@@ -12,6 +12,7 @@ use App\Correlativo;
 use App\User;
 use DB;
 use Toastr;
+use PDF;
 
 class SelloSalidaController extends Controller
 {
@@ -107,4 +108,18 @@ class SelloSalidaController extends Controller
     {
         //
     }
+
+    public function reporte(Request $request, $idsalida){
+        $fechaImpresion = 'La Paz, '.date('d').' de '.$this->fecha().' de '.date('Y');
+        $view = \View::make('sistema.sellosalida.reporte', compact('fechaImpresion'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->setPaper('Letter','portrait');
+        $pdf->loadHTML($view);
+        return $pdf->stream();
+    }
+    public function fecha(){
+        $arrayMes = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+        return $arrayMes[(int)(date('m')) - 1];
+    }
+
 }

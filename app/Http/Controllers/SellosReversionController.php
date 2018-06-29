@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Tematica;
 
 class SellosReversionController extends Controller
 {
@@ -24,7 +25,8 @@ class SellosReversionController extends Controller
      */
     public function create()
     {
-        //
+        $tematica = Tematica::where("estado","=",true)->pluck('tematica', 'id');
+        return view('sistema.selloreversion.create', compact("tematica", $tematica));
     }
 
     /**

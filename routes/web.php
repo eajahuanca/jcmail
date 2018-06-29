@@ -23,8 +23,11 @@ Route::group(['middleware' => 'auth'], function(){
 	
     Route::resource('/entrada', 'SelloEntradaController');
     Route::get('/listadoentrada', 'SelloEntradaController@listado');
+    Route::get('/saldotematica/{idtematica}', 'SelloEntradaController@saldoTematica');
+
     Route::resource('/salida', 'SelloSalidaController');
     Route::get('/listadosalida', 'SelloSalidaController@listado');
-    Route::get('/saldotematica/{idtematica}', 'SelloEntradaController@saldoTematica');
+    Route::get('/reporte/{idsalida}', 'SelloSalidaController@reporte');
+
     Route::resource('/reversion', 'SellosReversionController');
 });

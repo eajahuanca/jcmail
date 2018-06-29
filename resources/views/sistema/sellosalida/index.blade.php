@@ -100,5 +100,9 @@
 
             $("#gridSalidas").jqxGrid(options);
         });
+
+        notaSalida = function(idsalida){
+            window.open("{{ url('reporte', "+ idsalida +" ) }}");
+        }
     </script>
 @endsection

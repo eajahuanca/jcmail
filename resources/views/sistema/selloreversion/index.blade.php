@@ -6,15 +6,15 @@
 
 @endsection
 
-@section('actual','Sellos de entrada')
-@section('titulo','Sellos')
-@section('detalle','listado de sellos de entrada registrados')
+@section('actual','Reversion de Sellos')
+@section('titulo','Reversiones')
+@section('detalle','listado de reversion de sellos')
 
 @section('cuerpo')
     <div class="form-group">
         <div class="row">
             <div class="col-xs-12 pull-left">
-                <a href="{{ route('entrada.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Nueva Entrada de Sellos</a>
+                <a href="{{ route('reversion.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Nueva Reversion</a>
                 <a class="btn btn-danger"><i class="fa fa-file-pdf-o"></i> Reporte</a>
             </div>
         </div>
