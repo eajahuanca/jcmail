@@ -6,20 +6,20 @@
 
 @section('actual','Sellos de reversion')
 @section('titulo','Sellos')
-@section('detalle','nuevo registro de sello de entrada')
+@section('detalle','nuevo registro de sello de reversion')
 
 @section('cuerpo')
 
     <div class="row">
         <div class="col-xs-12 col-sm-12">
-            {!! Form::open(['route' => 'entrada.store', 'method' => 'post']) !!}
+            {!! Form::open(['route' => 'reversion.store', 'method' => 'post']) !!}
             <div class="clearfix">
                 <div class="pull-left">
                     <button class="btn btn-primary btn-round" type="submit">
                         <i class="ace-icon fa fa-save align-center"></i>
                         <b>Guardar</b>
                     </button>
-                    <a class="btn btn-danger btn-round" href="{{ route('entrada.index') }}">
+                    <a class="btn btn-danger btn-round" href="{{ route('reversion.index') }}">
                         <i class="ace-icon fa fa-exchange align-center"></i>
                         <b>Cancelar</b>
                     </a>
@@ -29,7 +29,7 @@
             <div class="col-xs-12 col-sm-12">
                 <div class="widget-box">
                     <div class="widget-header">
-                        <h4 class="widget-title">Datos a registrar (Sellos de reversion)</h4>
+                        <h4 class="widget-title">Datos a registrar (Reversion)</h4>
                         <span class="widget-toolbar">
                             <a href="#" data-action="settings">
                                 <i class="ace-icon fa fa-cog"></i>
@@ -45,7 +45,7 @@
 
                     <div class="widget-body">
                         <div class="widget-main">
-                        @include('sistema.selloentrada.form')
+                        @include('sistema.selloreversion.form')
                         </div>
                     </div>
                 </div>

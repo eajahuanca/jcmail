@@ -90,7 +90,7 @@
     <tr>
         <td align="left" width="25  %"><img src="{{ asset('plugin/login/img/escudo_bolivia.gif') }}" width="95px" height="80px"/></td>
         <td align="center"><b>Estado Plurinacional de Bolivia</b><br><div style="font-size:9px;">Agencia Boliviana de Correos<br><hr/></div></td>
-        <td align="right" width="20%"><img src="{{ asset('plugin/login/img/fonabosqu.png') }}" width="180px" height="50px"/></td>
+        <td align="right" width="20%"><img src="{{ asset('plugin/login/img/logo.png') }}" width="180px" height="50px"/></td>
     </tr>
 </table>
 <div class="tableEspacioTituloPrincipal">
@@ -135,7 +135,7 @@
 
         </tr>
     </table>
-    <table border="2px" width="100%" >
+    <table border="2px" width="100%" class="tableizer-table">
         <tr>
             <td>TEMATICA</td>
             <td>VALOR FACIAL</td>
@@ -143,10 +143,10 @@
             <td>MONTO BS.</td>
         </tr>
         <tr>
-            <td>Pajarito</td>
-            <td>10</td>
-            <td>5</td>
-            <td>50</td>
+            <td>{{ $salida->tematicas->tematica }}</td>
+            <td>{{ $salida->costo }}</td>
+            <td>{{ $salida->cantidad_salida }}</td>
+            <td>{{ $salida->total }}</td>
         </tr>
     </table>
     <table width="100%">
@@ -156,7 +156,7 @@
             <!--td><div class="nombres" width="10%">CARNET DE IDENTIDAD :</div></td!-->
             <!--td width="5%">dddd</td-->
         </tr>
-        
+
     </table>
     <table width="100%">
         <tr>
