@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reversion extends Model
 {
-    private $table = 'reversiones';
-    private $fillable = [
+    protected $table = 'reversiones';
+    protected $fillable = [
         'id',
         'idtematica',
         'cite_manual',

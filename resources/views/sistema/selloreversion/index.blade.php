@@ -57,9 +57,8 @@
                     { name: 'id', type: 'int' },
                     { name: 'tematica', type: 'string' },
                     { name: 'cantidad_actual', type: 'int' },
-                    { name: 'cantidad_nueva', type: 'int' },
-                    { name: 'costo' },
-                    { name: 'cantidad_total' },
+                    { name: 'cantidad_reversion', type: 'int' },
+                    { name: 'total' },
                     { name: 'created_at', type: 'string' },
                     { name: 'observaciones', type: 'string' }
                 ],
@@ -73,9 +72,8 @@
             options.columns = [
                 { text: 'Temática', datafield: 'tematica', sortable: true, filterable: true, groupable: false, cellsalign: 'center' },
                 { text: 'Cantidad Actual', datafield: 'cantidad_actual', width: '150px', filterable: false, cellsalign: 'center' },
-                { text: 'Cantidad Nueva', datafield: 'cantidad_nueva', width: '150px', filterable: false, cellsalign: 'center' },
-                { text: 'Valor Facial (Bs.)', datafield: 'costo', width: '150px', filterable: false, cellsalign: 'center' },
-                { text: 'Total', datafield: 'cantidad_total', width: '150px', filterable: false, cellsalign: 'center' },
+                { text: 'Cantidad Reversion', datafield: 'cantidad_reversion', width: '150px', filterable: false, cellsalign: 'center' },
+                { text: 'Total', datafield: 'total', width: '150px', filterable: false, cellsalign: 'center' },
                 { text: 'Fecha de Registro', datafield: 'created_at', width: '150px', filterable: false, cellsalign: 'center' },
                 { text: 'Observaciones', datafield: 'observaciones', width: '150px', filterable: false, cellsalign: 'center' },
                 {
@@ -90,8 +88,6 @@
                             "<button onclick='notaEntrada(" + value + ")' class='btn btn-danger btn-rounded' title='Nota de Entrada'><i class='fa fa-file-pdf-o'></i></button> ");
                         return element[0].outerHTML;
                     }
-                    //"<button onclick='editarEntrada(" + value + ")' class='btn btn-primary' title='Editar Entrada'><i class='fa fa-edit'></i></button> " +
-                    //"<button onclick='eliminarEntrada(" + value + ")' class='btn btn-warning' title='Eliminar Entrada'><i class='fa fa-trash'></i></button> ");
                 }
             ];
 

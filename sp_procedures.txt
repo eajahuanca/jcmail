@@ -32,11 +32,14 @@ BEGIN
     END IF;
 END
 
-ejecutas este procedimiento almacendado luego
-CREATE PROCEDURE `SP_ACTUALIZAR_TEMATICA_REVERSION`(IN tematicaID int, IN cantidad_reversion decimal(18,2))
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `SP_ACTUALIZAR_TEMATICA_REVERSION`(IN reversionID int,IN tematicaID int, IN cantidad_reversion decimal(18,2))
 BEGIN
 	UPDATE tematicas
     SET saldo_actual = saldo_actual + cantidad_reversion
     WHERE tematicas.id = tematicaID;
+    
+    UPDATE reversiones
+    SET estado = false
+    where reversiones.idtematica = tematicaID AND reversiones.id<>reversionID;
 END
-

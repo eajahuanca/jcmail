@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Tematica;
 use App\User;
 use App\Reversion;
@@ -19,7 +20,7 @@ class SellosReversionController extends Controller
 
     public function listado(){
         $result = DB::table('reversiones')
-            ->join('tematicas', 'salidas.idtematica', '=', 'tematicas.id')
+            ->join('tematicas', 'reversiones.idtematica', '=', 'tematicas.id')
             ->where([
                 ['tematicas.estado','=',true],
                 ['reversiones.estado','=',true],
@@ -31,6 +32,7 @@ class SellosReversionController extends Controller
                             reversiones.cantidad_actual,
                             reversiones.cantidad_reversion,
                             reversiones.total,
+                            reversiones.observaciones,
                             DATE_FORMAT(reversiones.created_at, '%d/%m/%Y %h:%i %p') AS created_at"))
             ->get()
             ->toJson();
@@ -53,11 +55,12 @@ class SellosReversionController extends Controller
     {
         try{
             $reversion = new Reversion($request->all());
+            $reversion->fecha_reversion = date('Y-m-d');
             $reversion->total = $reversion->cantidad_actual + $reversion->cantidad_reversion;
             $reversion->userid_registra = Auth::user()->id;
             $reversion->userid_actualiza = Auth::user()->id;
             if($reversion->save()){
-                $reversionActualizar = DB::select('CALL SP_ACTUALIZAR_TEMATICA_REVERSION(?,?)',array($reversion->idtematica, $reversion->cantidad_reversion));
+                $reversionActualizar = DB::select('CALL SP_ACTUALIZAR_TEMATICA_REVERSION(?,?,?)',array($reversion->id, $reversion->idtematica, $reversion->cantidad_reversion));
                 Toastr::success('Se ha registrado de manera correcta la reversion de '.$reversion->cantidad_reversion.' unidades','Registro de Reversion');
             }
         }catch(\Exception $ex){

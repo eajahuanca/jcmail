@@ -56,11 +56,11 @@
 
 	<div class="col-xs-12 col-sm-4">
 		<div class="{{ $errors->has('observaciones')?' has-error':'' }}">
-			{{ Form::label('cite_manual', 'Observaciones') }}
-			{{ Form::textarea('Observaciones',null,['rows' => '3'])}}
-			@if($errors->has('Observaciones'))
+			{{ Form::label('observaciones', 'Observaciones') }}
+			{{ Form::textarea('observaciones',null,['rows' => '3'])}}
+			@if($errors->has('observaciones'))
 				<span style="color:red;">
-					<strong>{{ $errors->first('Observaciones') }}</strong>
+					<strong>{{ $errors->first('observaciones') }}</strong>
 				</span>
 			@endif
 		</div>

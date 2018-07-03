@@ -102,7 +102,8 @@
         });
 
         notaSalida = function(idsalida){
-            window.open("{{ url('/reporte',"+ idsalida +") }} ");
+            var url = "{{ url('/reporte', ['idsalida' => '']) }}" + "/" + idsalida;
+            window.open(url);
         }
     </script>
 @endsection

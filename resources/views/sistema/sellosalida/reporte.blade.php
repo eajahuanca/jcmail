@@ -124,7 +124,7 @@
 <div class="tableEspaciosTitulo">
     <table width="100%">
         <tr>
-            <td width="100%"><div class="nombres">En atención a su solicitud con cite: AGBC/TEs, se procede a la Remisión de los Sellos de Franqueo bajo el siguiente detalle:</div></td>
+            <td width="100%"><div class="nombres">En atención a su solicitud con cite: <i>{{ $salida[0]->correlativo }}</i>, se procede a la Remisión de los Sellos de Franqueo bajo el siguiente detalle:</div></td>
             <!--td width="40%">nombre compelto</td-->
             <!--td><div class="nombres" width="10%">CARNET DE IDENTIDAD :</div></td!-->
             <!--td width="5%">dddd</td-->
@@ -143,10 +143,10 @@
             <td>MONTO BS.</td>
         </tr>
         <tr>
-            <td>{{ $salida->tematicas->tematica }}</td>
-            <td>{{ $salida->costo }}</td>
-            <td>{{ $salida->cantidad_salida }}</td>
-            <td>{{ $salida->total }}</td>
+            <td>{{ $salida[0]->tematicas->tematica }}</td>
+            <td>{{ $salida[0]->costo }}</td>
+            <td>{{ $salida[0]->cantidad_salida }}</td>
+            <td>{{ $salida[0]->total }}</td>
         </tr>
     </table>
     <table width="100%">
