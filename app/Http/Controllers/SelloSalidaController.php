@@ -110,8 +110,9 @@ class SelloSalidaController extends Controller
     }
 
     public function reporte(Request $request, $idsalida){
+        $salida = Salida::find("id=".$idsalida);
         $fechaImpresion = 'La Paz, '.date('d').' de '.$this->fecha().' de '.date('Y');
-        $view = \View::make('sistema.sellosalida.reporte', compact('fechaImpresion'))->render();
+        $view = \View::make('sistema.sellosalida.reporte', compact('fechaImpresion','salida'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->setPaper('Letter','portrait');
         $pdf->loadHTML($view);

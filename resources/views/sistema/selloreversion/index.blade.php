@@ -60,9 +60,10 @@
                     { name: 'cantidad_nueva', type: 'int' },
                     { name: 'costo' },
                     { name: 'cantidad_total' },
-                    { name: 'created_at', type: 'string' }
+                    { name: 'created_at', type: 'string' },
+                    { name: 'observaciones', type: 'string' }
                 ],
-                url: "{{ url('/listadoentrada') }}"
+                url: "{{ url('/listadoreversion') }}"
             };
 
             var dataAdapter = new $.jqx.dataAdapter(source);
@@ -73,9 +74,10 @@
                 { text: 'Temática', datafield: 'tematica', sortable: true, filterable: true, groupable: false, cellsalign: 'center' },
                 { text: 'Cantidad Actual', datafield: 'cantidad_actual', width: '150px', filterable: false, cellsalign: 'center' },
                 { text: 'Cantidad Nueva', datafield: 'cantidad_nueva', width: '150px', filterable: false, cellsalign: 'center' },
-                { text: 'Costo (Bs.)', datafield: 'costo', width: '150px', filterable: false, cellsalign: 'center' },
+                { text: 'Valor Facial (Bs.)', datafield: 'costo', width: '150px', filterable: false, cellsalign: 'center' },
                 { text: 'Total', datafield: 'cantidad_total', width: '150px', filterable: false, cellsalign: 'center' },
                 { text: 'Fecha de Registro', datafield: 'created_at', width: '150px', filterable: false, cellsalign: 'center' },
+                { text: 'Observaciones', datafield: 'observaciones', width: '150px', filterable: false, cellsalign: 'center' },
                 {
                     text: '',
                     datafield: 'id',

@@ -31,3 +31,12 @@ BEGIN
 			  salidas.id <> salidaID;
     END IF;
 END
+
+ejecutas este procedimiento almacendado luego
+CREATE PROCEDURE `SP_ACTUALIZAR_TEMATICA_REVERSION`(IN tematicaID int, IN cantidad_reversion decimal(18,2))
+BEGIN
+	UPDATE tematicas
+    SET saldo_actual = saldo_actual + cantidad_reversion
+    WHERE tematicas.id = tematicaID;
+END
+

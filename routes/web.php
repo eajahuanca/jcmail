@@ -30,4 +30,5 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/reporte/{idsalida}', 'SelloSalidaController@reporte');
 
     Route::resource('/reversion', 'SellosReversionController');
+    Route::get('/listadoreversion', 'SellosReversionController@listado');
 });
