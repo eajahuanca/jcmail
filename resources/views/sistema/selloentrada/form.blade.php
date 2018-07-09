@@ -5,7 +5,7 @@
 			{{ Form::select('idtematica', $tematica,null, ['class' => 'chosen-select form-control']) }}
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-4">
+	<div class="col-xs-12 col-sm-3">
 		<div class="{{ $errors->has('cantidad_actual')?' has-error':'' }}">
 			{{ Form::label('cantidad_actual', 'Cantidad Actual (Stock)') }}
 			<div class="input-group">
@@ -21,7 +21,7 @@
 			@endif
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-4">
+	<div class="col-xs-12 col-sm-3">
 		<div class="{{ $errors->has('cantidad_nueva')?' has-error':'' }}">
 			{{ Form::label('cantidad_nueva', 'Nuevo Ingreso') }}
 			<div class="input-group">
@@ -36,5 +36,12 @@
 				</span>
 			@endif
 		</div>
+	</div>
+	<div class="col-xs-12 col-sm-2">
+		<br>
+		<button class="btn btn-primary btn-round" type="button" id="bt_add">
+			<i class="ace-icon fa fa-plus align-center"></i>
+			<b>Agregar</b>
+		</button>
 	</div>
 </div>
