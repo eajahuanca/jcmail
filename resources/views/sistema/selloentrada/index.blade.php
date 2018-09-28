@@ -15,7 +15,7 @@
 		<div class="row">
 			<div class="col-xs-12 pull-left">
 				<a href="{{ route('entrada.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Nueva Entrada de Sellos</a>
-				<a class="btn btn-danger"><i class="fa fa-file-pdf-o"></i> Reporte</a>
+				<a class="btn btn-danger" id="btnreporte_ingreso"><i class="fa fa-file-pdf-o"></i> Reporte</a>
 			</div>
 		</div>
 		<div class="row">
@@ -26,6 +26,24 @@
             </div>
 		</div>
 	</div>
+
+    <div class="modal fade" id="modalFechaIngreso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Obtener Reporte de Ingreso</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>  
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('scripts')
@@ -94,6 +112,10 @@
             ];
 
             $("#gridEntradas").jqxGrid(options);
+
+            $('#btnreporte_ingreso').on('click', function(){
+                $('#modalFechaIngreso').modal('show');
+            });
         });
     </script>
 @endsection
