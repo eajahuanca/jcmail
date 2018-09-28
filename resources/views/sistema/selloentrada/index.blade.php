@@ -30,16 +30,20 @@
     <div class="modal fade" id="modalFechaIngreso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <form action="" name="formFechaEntrada" id="formFechaEntrada">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-calendar"></i> Fecha de Reporte de Entradas</h5>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <label for="fecha_reporte"><code>(*)</code> Ingrese una fecha de entrada</label>
+                    <input type="date" name="fecha_reporte" id="fecha_reporte" class="form-control" required=true/>
+                    <code>Nota.- Los campos con (*) son requeridos</code>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Obtener Reporte de Ingreso</button>
+                    <button type="submit" class="btn btn-primary" id="btnEnviarFechaEntrada">Obtener Reporte de Ingreso</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                </div>  
+                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -115,6 +119,13 @@
 
             $('#btnreporte_ingreso').on('click', function(){
                 $('#modalFechaIngreso').modal('show');
+            });
+
+            $('#btnEnviarFechaEntrada').on('click', function(eve){
+                eve.preventDefault();
+                var data = $('#formFechaEntrada').serialize();
+                alert('listo para enviar');
+                console.log(data);
             });
         });
     </script>
