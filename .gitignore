@@ -1,3 +1,5 @@
 # archivos que no se subiran en el repositorio
-node_modules
-vendor
+node_modules/
+vendor/
+.idea/
+.vscode/
