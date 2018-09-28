@@ -124,8 +124,17 @@
             $('#btnEnviarFechaEntrada').on('click', function(eve){
                 eve.preventDefault();
                 var data = $('#formFechaEntrada').serialize();
-                alert('listo para enviar');
-                console.log(data);
+                $.ajax({
+                    type: 'POST',
+                    data: data,
+                    url: "{{ url('/fechaentradareporte') }}",
+                    success: function (data){
+                        console.log(data);
+                    },
+                    error: function (xhr){
+                        console.log(xhr);
+                    }
+                });
             });
         });
     </script>
