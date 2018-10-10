@@ -30,20 +30,20 @@
     <div class="modal fade" id="modalFechaIngreso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="" name="formFechaEntrada" id="formFechaEntrada">
+                {!! Form::open(["name"=>"formFechaEntrada", "id"=>"formFechaEntrada"]) !!}
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-calendar"></i> Fecha de Reporte de Entradas</h5>
                 </div>
                 <div class="modal-body">
                     <label for="fecha_reporte"><code>(*)</code> Ingrese una fecha de entrada</label>
-                    <input type="date" name="fecha_reporte" id="fecha_reporte" class="form-control" required=true/>
+                    <input type="date" name="fecha_reporte" id="fecha_reporte" class="form-control" required />
                     <code>Nota.- Los campos con (*) son requeridos</code>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" id="btnEnviarFechaEntrada">Obtener Reporte de Ingreso</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
-                </form>
+                {!! Form::close() !!}
             </div>
         </div>
     </div>
@@ -125,11 +125,72 @@
                 eve.preventDefault();
                 var data = $('#formFechaEntrada').serialize();
                 $.ajax({
+                    cache: false,
                     type: 'POST',
-                    data: data,
                     url: "{{ url('/fechaentradareporte') }}",
-                    success: function (data){
-                        console.log(data);
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    /*success: function(response){
+                        var blob = new Blob([response.pdf_stream], { type: 'application/pdf', endings: 'native' });
+                        var url = window.URL.createObjectURL(blob);
+                        var a = document.createElement("a");
+                        a.href = url;
+                        a.target = "_blank";
+                        a.download = response.filename;
+                        a.click();
+                        //window.URL.revokeObjectURL(url);
+
+                    },*/
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function (response, status, xhr) {
+
+                        var filename = "";
+                        var disposition = xhr.getResponseHeader('Content-Disposition');
+
+                        if (disposition) {
+                            var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                            var matches = filenameRegex.exec(disposition);
+                            if (matches !== null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+                        }
+                        var linkelem = document.createElement('a');
+                        try {
+                            var blob = new Blob([response], { type: 'application/pdf' });
+
+                            if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                                //   IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
+                                window.navigator.msSaveBlob(blob, filename);
+                            } else {
+                                var URL = window.URL || window.webkitURL;
+                                var downloadUrl = URL.createObjectURL(blob);
+
+                                if (filename) {
+                                    // use HTML5 a[download] attribute to specify filename
+                                    var a = document.createElement("a");
+
+                                    // safari doesn't support this yet
+                                    if (typeof a.download === 'undefined') {
+                                        window.location = downloadUrl;
+                                    } else {
+                                        a.href = downloadUrl;
+                                        a.download = filename;
+                                        document.body.appendChild(a);
+                                        a.target = "_blank";
+                                        a.click();
+                                    }
+                                } else {
+                                    window.location = downloadUrl;
+                                }
+                            }
+
+                        } catch (ex) {
+                            console.log(ex);
+                        }
                     },
                     error: function (xhr){
                         console.log(xhr);

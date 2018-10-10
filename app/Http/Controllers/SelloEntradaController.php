@@ -9,6 +9,7 @@ use App\Ingreso;
 use App\Correlativo;
 use DB;
 use Toastr;
+use PDF;
 
 class SelloEntradaController extends Controller
 {
@@ -118,5 +119,26 @@ class SelloEntradaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function reporteFechaEntrada(Request $request){
+        //$salida = Salida::where("id","=",$idsalida)->get();
+        $fechaImpresion = 'La Paz, '.date('d').' de '.$this->fecha().' de '.date('Y');
+        //$view = \View::make('sistema.sellosalida.reporte', compact('fechaImpresion','salida'))->render();
+        $view = \View::make('sistema.selloentrada.reportefechaentrada', compact('fechaImpresion'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->setPaper('Letter','portrait');
+        $pdf->loadHTML($view);
+        $filename = "tessss.pdf";
+        /*return response()->json([
+            'pdf_stream' =>  utf8_encode($pdf->stream($filename)),
+            'filename' => $filename
+         ]);*/
+        return $pdf->download($filename);
+    }
+
+    public function fecha(){
+        $arrayMes = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+        return $arrayMes[(int)(date('m')) - 1];
     }
 }

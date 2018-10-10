@@ -12,7 +12,7 @@
 				<span class="input-group-addon">
 					<i class="ace-icon fa fa-image"></i>
 				</span>
-				{{ Form::text('cantidad_actual',500, ['class' => 'form-control']) }}
+				{{ Form::text('cantidad_actual',0, ['class' => 'form-control']) }}
 			</div>
 			@if($errors->has('cantidad_actual'))
 				<span style="color:red;">

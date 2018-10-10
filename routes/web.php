@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('/entrada', 'SelloEntradaController');
     Route::get('/listadoentrada', 'SelloEntradaController@listado');
     Route::get('/saldotematica/{idtematica}', 'SelloEntradaController@saldoTematica');
+    Route::post('/fechaentradareporte', 'SelloEntradaController@reporteFechaEntrada');
 
     Route::resource('/salida', 'SelloSalidaController');
     Route::get('/listadosalida', 'SelloSalidaController@listado');

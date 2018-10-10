@@ -99,7 +99,7 @@
 @section('codigoscript')
     <script>
     $(document).ready(function(){
-        $("#idtematica").append("<option selected>Seleccione ...</option>");
+        //$("#idtematica").append("<option selected>Seleccione ...</option>");
         $("#idtematica").change(function(){
             $.ajax({
                 type: "GET",
@@ -134,6 +134,7 @@
         }
 
         $("#div-detalle").hide();
+        $("#cantidad_actual").attr("disabled", "disabled");
         $("#bt_add").click(function(){
             agregar();
         });
@@ -146,7 +147,7 @@
             var cantidadNueva = $("#cantidad_nueva").val();
             var total = parseFloat(cantidadActual) + parseFloat(cantidadNueva);
            
-            if (cantidadNueva!="" && cantidadActual != ""){
+            if (cantidadNueva!="" && cantidadActual != "" && cantidadActual != 0){
                 if (parseFloat(cantidadNueva) > 0){
                     var fila =  '<tr class="selected" id="fila'+cont+'">' +
                                     '<td align="center">'+cont+'</td>' +
